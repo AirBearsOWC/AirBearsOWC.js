@@ -9,6 +9,7 @@ const httpServer = express()
 const baseServer = http.createServer(httpServer)
 
 const DB = require('./db/_connection')
+const User = require('./db/user')
 
 baseServer
 	.listen('3000', () => {
@@ -36,10 +37,10 @@ API.route = function(name){
 API.RESTful = function(name){
 	const router = API.route(name)
 	router
-		.get(	'/', echo)
-		.get(	'/:id', echo)
-		.post(	'/', echo)
-		.put(	'/:id', echo)
+		.get(   '/', echo)
+		.get(   '/:id', echo)
+		.post(  '/', echo)
+		.put(   '/:id', echo)
 		.delete('/:id', echo)
 	return router
 }
@@ -51,7 +52,16 @@ API
 		.post(	'/', echo)
 		.delete('/', echo)
 API
-	.RESTful('/users')
+	.route('/users')
+		.get(	'/', (req, res) => {
+			User.findAll().then((users) => {
+				res.json(users)
+			})
+		})
+		.get(	'/:id', echo)
+		.post(	'/', echo)
+		.put(	'/:id', echo)
+		.delete('/:id', echo)
 API
 	.RESTful('/orgs')
 API
