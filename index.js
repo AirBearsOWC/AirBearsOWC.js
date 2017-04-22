@@ -27,59 +27,37 @@ httpServer
 	})
 
 const API = express.Router()
-httpServer.use('/api', API)
 API.route = function(name){
 	const router = express.Router()
-	API[name] = router
-	API.use('/' + name, router)
+	API[name.replace('/', '')] = router
+	API.use(name, router)
 	return router
 }
-API
-	.post(	'/Token', echo)
-	.post(	'/payment-token', echo)
-API
-	.route('accounts')
-		.post(	'/pilot-registration', echo)
-		.post(	'/prepaid-pilot-registration', echo)
-		.post(	'/authority-registration', echo)
-		.post(	'/forgot-password', echo)
-		.post(	'/reset-password', echo)
-API
-	.route('authority-users')
+API.RESTful = function(name){
+	const router = API.route(name)
+	router
 		.get(	'/', echo)
 		.get(	'/:id', echo)
-		.put(	'/:id/approve', echo)
-API
-	.route('messages')
 		.post(	'/', echo)
+		.put(	'/:id', echo)
+		.delete('/:id', echo)
+	return router
+}
+
+httpServer.use('/api', API)
 API
-	.route('pilots')
+	.route('/sessions')
 		.get(	'/', echo)
-		.get(	'/:id', echo)
-		.put(	'/:id/tee-shirt-mailed', echo)
-		.post(	'/search', echo)
-		.get(	'/me', echo)
-API
-	.route('posts')
-		.get(	'/', echo)
-		.get(	'/:id', echo)
-		.get(	'/:slug', echo)
 		.post(	'/', echo)
-		.put(	'/', echo)
+		.delete('/', echo)
 API
-	.route('resources')
-		.get(	'states', echo)
-		.get(	'tee-shirt-sizes', echo)
-		.get(	'payloads', echo)
-		.get(	'flight-times', echo)
+	.RESTful('/users')
 API
-	.route('me')
-		.get(	'/', echo)
-		.get(	'/invite-users', echo)
-		.post(	'/password', echo)
+	.RESTful('/orgs')
 API
-	.route('users')
-		.get(	'/:id', echo)
+	.RESTful('/drones')
+API
+	.RESTful('/missions')
 
 function echo(req, res){
 	res.json({
