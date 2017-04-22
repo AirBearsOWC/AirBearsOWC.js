@@ -3,6 +3,6 @@
 const db = require('./_connection')
 const User = require('./user')
 
-User.bulkCreate(require('./sample/users')).then(() => {
+User.sync({force: true}).then(() => {
 	process.exit()
 })
