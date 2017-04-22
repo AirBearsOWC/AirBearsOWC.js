@@ -69,7 +69,7 @@ gulp.task("min:js", ["clean"], function () {
         .pipe(ngAnnotate())
         .pipe(sourcemaps.init())
         .pipe(concat("combined.js"))
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest("./public/dist/js"));
 });
