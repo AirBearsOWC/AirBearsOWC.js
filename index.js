@@ -25,36 +25,61 @@ httpServer
 	.get('/', (req, res) => {
 		res.sendFile(__dirname + '/public/src.html')
 	})
-	.post('/api/accounts/pilot-registration', echo)
-	.post('/api/accounts/prepaid-pilot-registration', echo)
-	.post('/api/accounts/authority-registration', echo)
-	.post('/api/accounts/forgot-password', echo)
-	.post('/api/accounts/reset-password', echo)
-	.get('/api/authority-users/:id', echo)
-	.get('/api/authority-users', echo)
-	.put('/api/authority-users/:id/approve', echo)
-	.post('/api/messages', echo)
-	.get('/api/pilots/:id', echo)
-	.get('/api/pilots', echo)
-	.post('/api/pilots/search', echo)
-	.put('/api/pilots/:id/tee-shirt-mailed', echo)
-	.put('/api/pilots/me', echo)
-	.delete('/api/posts/:id', echo)
-	.get('/api/posts/:id', echo)
-	.get('/api/posts/:slug', echo)
-	.get('/api/posts', echo)
-	.post('/api/posts', echo)
-	.put('/api/posts', echo)
-	.get('/api/resources/states', echo)
-	.get('/api/resources/tee-shirt-sizes', echo)
-	.get('/api/resources/payloads', echo)
-	.get('/api/resources/flight-times', echo)
-	.post('/api/Token', echo)
-	.post('/api/payment-token', echo)
-	.get('/api/me/invite-users', echo)
-	.get('/api/me', echo)
-	.post('/api/me/password', echo)
-	.get('/api/users/:id', echo)
+
+const API = express.Router()
+httpServer.use('/api', API)
+API.route = function(name){
+	const router = express.Router()
+	API[name] = router
+	API.use('/' + name, router)
+	return router
+}
+API
+	.post(	'/Token', echo)
+	.post(	'/payment-token', echo)
+API
+	.route('accounts')
+		.post(	'/pilot-registration', echo)
+		.post(	'/prepaid-pilot-registration', echo)
+		.post(	'/authority-registration', echo)
+		.post(	'/forgot-password', echo)
+		.post(	'/reset-password', echo)
+API
+	.route('authority-users')
+		.get(	'/', echo)
+		.get(	'/:id', echo)
+		.put(	'/:id/approve', echo)
+API
+	.route('messages')
+		.post(	'/', echo)
+API
+	.route('pilots')
+		.get(	'/', echo)
+		.get(	'/:id', echo)
+		.put(	'/:id/tee-shirt-mailed', echo)
+		.post(	'/search', echo)
+		.get(	'/me', echo)
+API
+	.route('posts')
+		.get(	'/', echo)
+		.get(	'/:id', echo)
+		.get(	'/:slug', echo)
+		.post(	'/', echo)
+		.put(	'/', echo)
+API
+	.route('resources')
+		.get(	'states', echo)
+		.get(	'tee-shirt-sizes', echo)
+		.get(	'payloads', echo)
+		.get(	'flight-times', echo)
+API
+	.route('me')
+		.get(	'/', echo)
+		.get(	'/invite-users', echo)
+		.post(	'/password', echo)
+API
+	.route('users')
+		.get(	'/:id', echo)
 
 function echo(req, res){
 	res.json({
