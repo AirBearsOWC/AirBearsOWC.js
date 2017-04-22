@@ -1,0 +1,44 @@
+﻿.reveal-animation {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-bottom: 40px;
+    min-height: 93%;
+    height: auto !important;
+    height: 100%;
+}
+
+.container > .reveal-animation {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.reveal-animation.ng-enter, .reveal-animation.ng-leave {
+    -webkit-transition: 0.3s linear all;
+    transition: 0.3s linear all;
+    transition-delay: 0.15s;
+}
+
+.reveal-animation.ng-leave {
+    -webkit-transition: 0.3s linear all;
+    transition: 0.3s linear all;
+}
+
+.reveal-animation.ng-enter {
+    opacity: 0;
+}
+
+    .reveal-animation.ng-enter.ng-enter-active {
+        opacity: 1;
+    }
+
+.reveal-animation.ng-leave {
+    opacity: 1;
+    position: absolute;
+    top: 50px;
+}
+
+    .reveal-animation.ng-leave.ng-leave-active {
+        opacity: 0;
+    }

@@ -1,0 +1,55 @@
+﻿<div class="container body-content">
+    <div class="page-header">
+        <h1>Manage Posts</h1>
+    </div>
+
+    <div class="row">
+        <p class="col-md-12">
+            <button class="btn btn-success" ng-click="vm.createPost()">
+                <i class="glyphicon glyphicon-plus-sign"></i> Create New Post
+            </button>
+        </p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">           
+            <div class="panel panel-default">
+                <table class="table table-striped borderless table-condensed vertical-center">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Publish Date</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="post in vm.posts">
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="glyphicon glyphicon-cog"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href ng-click="vm.editPost(post.id)">Edit Post</a></li>
+                                        <li><a href ng-click="vm.viewPost()">View Post</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href ng-click="vm.deletePost(post)"><i class="glyphicon glyphicon-trash"></i> Delete Post</a></li>
+                                    </ul>
+                                </div>
+
+                                &nbsp;&nbsp;
+
+                                {{ post.title }}
+                            </td>
+                            <td>{{ post.status }}</td>                          
+                            <td>{{ post.datePublished | date:"shortDate"}}</td>
+                            <td>{{ post.dateUpdated | date:"short"}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

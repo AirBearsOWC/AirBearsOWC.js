@@ -1,0 +1,328 @@
+﻿html, body {
+    height: 100%;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 50px;
+}
+
+.page-view {
+    
+}
+
+
+input, select, textarea {
+     max-width: 100% !important; 
+}
+
+.navbar-inverse {
+    background-color: rgba(60,60,60,0.85);
+    border-bottom: #555;
+}
+
+.navbar-brand > img {
+    height: 40px;
+    display: inline-block;
+    position: relative;
+    top: -10px;
+    -webkit-filter: brightness(155%);
+}
+
+.navbar-brand > span {
+    position: relative;
+    top: -9px;
+}
+
+.navbar-inverse .navbar-nav > li > a, 
+.navbar-inverse .navbar-text, 
+.navbar-inverse .navbar-brand {
+    color: #eee;
+}
+
+.navbar-inverse .navbar-nav a {
+    cursor: pointer;
+}
+
+.navbar-inverse .navbar-nav > .active > a, 
+.navbar-inverse .navbar-nav > .active > a:focus, 
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav> li > a:hover {
+    color: #fff;
+    background: rgba(30,30,30,0.65);
+}
+
+.navbar-inverse .navbar-nav > .open > a, 
+.navbar-inverse .navbar-nav > .open > a:focus, 
+.navbar-inverse .navbar-nav > .open > a:hover {
+    color: #fff;
+    background: rgba(10,10,10,0.55);
+}
+
+.navbar .dropdown-menu {
+     background-color: rgba(60,60,60,.85);
+     border: 0;
+}
+
+.navbar .dropdown-menu a {
+    color: #fff;
+}
+
+.navbar .dropdown-menu a.active,
+.navbar .dropdown-menu a:hover {
+    color: #fff;
+    background: rgba(30,30,30,0.65);
+}
+
+.navbar .dropdown-menu>.active>a, .navbar .dropdown-menu>.active>a:focus, .navbar .dropdown-menu>.active>a:hover {
+    background: rgba(10,10,10,.55);
+}
+
+.navbar .dropdown-header, 
+.dropdown-menu > li > a {
+    padding: 6px 20px;
+}
+
+.bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 0;
+    background: url('/images/large-bg.png');
+    height: 500px;
+    background-position: 0px -254px;
+}
+
+.vert-margin {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.under-jumbo {
+    margin-top: 125px;
+}
+
+.vertical-center.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.vertical-align {
+    display: flex;
+    flex-direction: row;
+}
+
+.vertical-align > [class^="col-"],
+.vertical-align > [class*=" col-"] {
+    display: flex;
+    align-items: center; /* Align the flex-items vertically */
+    justify-content: center; /* Optional, to align inner flex-items 
+                            horizontally within the column  */
+}
+
+.row.space-bottom {
+    margin-bottom: 15px;
+}
+
+.sponsors a {
+    transition: opacity 0.3s ease;
+    width: 100%;
+}
+
+.sponsors a:hover {
+    opacity: 0.6;
+}
+
+.img-responsive {
+    display: inline-block;
+}
+
+.img-modal {
+    max-height: 170px;
+    display: inline-block;
+}
+
+.btn .glyphicon {
+    top: 2px;
+}
+
+.glyphicon.pad-right {
+    padding-right: 10px;
+}
+
+.bottom-margin {
+    margin-bottom: 20px;
+}
+
+.list-labels .label {
+    margin-right: 3px;
+}
+
+.form-group .checkbox {
+    top: -5px;
+}
+
+.social-icon {
+    transition: opacity 0.3s ease;
+}
+
+.social-icon:hover {
+    opacity: 0.4;
+}
+
+.social-icon img {
+    height: 50px;
+}
+
+.footer .social-icon img {
+    height: 30px;
+    position: relative;
+    top: -1px;
+    left: -3px;
+}
+
+.transition-container {
+    min-height: 100%;
+    height: 100%;
+}
+
+ol ol > li {
+    list-style-type: lower-alpha;
+}
+
+.text-light {
+    color: #888;
+}
+
+.no-top-margin {
+    margin-top: 0;
+}
+
+.post-preview .date, .post .date, .post-list-item .date {
+    color: #999;
+}
+
+.footer .date {
+    font-size: 0.9em;
+}
+
+.post-list-item .title {
+    font-size: 1.15em;
+}
+
+.post-list-item {
+    margin-bottom: 20px;
+}
+
+.footer {
+    background-color: #333;
+    color: #ddd;
+    padding: 20px 0px;
+}
+
+.white-bg {
+    background-color: #fff;
+    position: absolute;
+    width: 100%;
+    height: 1750px;
+    /*margin-top: -35px;*/
+    left: 0;
+}
+
+.bg-vid {
+    position: absolute;
+    z-index: -20;
+    width: 100%;
+    height: 100%;
+    top: -43%;
+}
+
+@media (max-width: 992px) {
+    .bg-vid {
+        width: 140%;
+        height: 140%;
+        top: -61%;
+    }
+}
+.jumbotron {
+    margin-top: 50px;
+    position: relative;
+    z-index: 10;
+    background: rgba(30,30,30,0.6);
+    color: #fff;
+    text-shadow: 1px 2px #000;
+}
+
+.photo {
+    border-radius: 60px;
+    height: 159px;
+    width: 115px;
+}
+
+.header-bar {
+    background-color: #eee;
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+    box-shadow: 0px 2px 2px 0px #ccc;
+}
+
+.header-bar h2 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #555;
+    text-shadow: 2px 2px 1px #ccc;
+}
+
+@media (max-width: 600px) {
+    .vertical-align {
+        display: inline-block;
+    }
+}
+
+/*
+    Toast Overrides
+*/
+
+.toast-top-right {
+    top: 70px;
+}
+
+
+/*
+    Validation
+*/
+
+.help-block.validation {
+    display: none;
+}
+
+.has-error .help-block.validation {
+    display: block;
+}
+
+.has-error label {
+    color: #a94442;
+}
+
+
+/*
+    Modal Overrides
+*/
+
+@media (min-width: 768px) {
+    .modal-dialog {
+        margin: 135px auto;
+    }
+
+    .modal-sm {
+        /* We want the small modal to be a bit bigger */
+        width: 400px;
+    }
+}

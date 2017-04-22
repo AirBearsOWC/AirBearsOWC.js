@@ -1,0 +1,112 @@
+﻿<div class="container body-content">
+    <div class="page-header">
+        <h1>UAS Pilot Search</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form name="searchForm" role="form" novalidate ng-submit="vm.search(searchForm.$valid && vm.user)">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group" ab-client-validate>
+                                    <label for="address">Address</label>
+                                    <input id="address" name="address" type="text" class="form-control" required autocomplete="off" g-places-autocomplete ng-model="vm.address" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="distance">Search Distance</label>
+                                    <select id="distance" name="distance" class="form-control" required ng-model="vm.distance" ng-options="d.name for d in vm.distances"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success" ng-disabled="vm.isSearching || !vm.user" style="width: 100%;">
+                                <i class="glyphicon glyphicon-search"></i> Search
+                                <span ng-show="!vm.user">(Members Only)</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default" ng-show="vm.results">
+                <div class="panel-heading">
+                    <h2 class="panel-title">{{ vm.results.length }} Pilots Found</h2>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item" 
+                        ng-repeat="pilot in vm.results | startFrom:(vm.currentPage-1)*vm.pageSize | limitTo:vm.pageSize" 
+                        ng-click="vm.selectPilot(pilot)" 
+                        ng-class="{ active: pilot.show }">
+
+                        <strong>{{ pilot.firstName }} {{ pilot.lastName }}</strong>
+                        <span class="badge">{{ pilot.distance | number:2 }} miles</span>
+                        <br />
+                        <em>{{ pilot.email }}</em>
+                    </li>
+                    <li class="list-group-item" ng-show="vm.results.totalCount === 0">
+                        No pilots were found. Try expanding your search distance.
+                    </li>
+                </ul>
+            </div>
+
+            <uib-pagination total-items="vm.results.length"                            
+                            items-per-page="vm.pageSize"
+                            max-size="6"
+                            boundary-link-numbers="true"
+                            rotate="false"
+                            ng-show="vm.results && vm.results.length > vm.pageSize"
+                            ng-model="vm.currentPage"
+                            ng-change="vm.pageChanged()"></uib-pagination>
+
+        </div>
+
+        <div class="col-sm-7">
+            <ui-gmap-google-map ng-if="vm.map && vm.results && vm.user" center="vm.map.center" zoom="vm.map.zoom">
+                <ui-gmap-circle center="vm.circle.center" stroke="vm.circle.stroke" fill="vm.circle.fill" radius="vm.circle.radius"></ui-gmap-circle>
+                <ui-gmap-markers models="vm.results" coords="'self'" options="'options'" click="vm.toggleMarkerWindow">
+                    <ui-gmap-windows show="show" templateUrl="'windowTemplate'" templateParameter="model"></ui-gmap-windows>
+                </ui-gmap-markers>
+            </ui-gmap-google-map>
+
+            <div ng-hide="vm.user">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h3 class="text-center"><img src="../../images/pilot-icon.jpg" class="img-responsive" title="Air Bears Volunteer Pilots" /></h3>                    
+                    </div>
+                    <div class="col-sm-9">
+                        <h3>
+                            Use the Air Bears search tool to locate volunteer UAS pilots near your location.
+                        </h3>
+                        <p>For privacy reasons, the Air Bears pilot database is only available to registered members. Log in or register to begin searching.</p>
+
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <button class="btn btn-primary form-control" ng-click="vm.openRegistationOptions()">Register</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <button class="btn btn-info form-control" ng-click="vm.openLogin()">Log In</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>              
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .angular-google-map-container { height: 600px; width: 100%; }
+</style>

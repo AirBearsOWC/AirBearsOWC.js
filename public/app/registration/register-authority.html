@@ -1,0 +1,102 @@
+﻿
+<div class="col-sm-8">
+    <form name="regForm" role="form" novalidate ng-submit="vm.submit(regForm.$valid)">
+        <h3>Organization Information</h3>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group" ab-client-validate>
+                    <label for="organization">Organization Name <small class="glyphicon glyphicon-question-sign" uib-tooltip="What is the name of the organization in need of Air Bears UAS assistance?"></small></label>
+                    <input id="organization" name="organization" type="text" class="form-control" required ng-model="vm.registration.organization" />
+                    <div class="help-block validation" ng-show="regForm.organization.$error.required">Organization Name is required.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group" ab-client-validate>
+                    <label for="phone">Phone Number</label>
+                    <input id="phone" name="phone" type="text" class="form-control" required ng-model="vm.registration.phoneNumber" />
+                    <div class="help-block validation" ng-show="regForm.phone.$error.required">Phone Number is required.</div>
+                </div>
+            </div>
+        </div>
+
+        <h3>Commander Information <small class="glyphicon glyphicon-question-sign" uib-tooltip="Who will be the primary point of contact?"></small></h3>
+
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group" ab-client-validate>
+                    <label for="firstName">Contact First Name</label>
+                    <input id="firstName" name="firstName" type="text" class="form-control" required ng-model="vm.registration.firstName" />
+                    <div class="help-block validation" ng-show="regForm.firstName.$error.required">First Name is required.</div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="form-group" ab-client-validate>
+                    <label for="lastName">Contact Last Name</label>
+                    <input id="lastName" name="lastName" type="text" class="form-control" required ng-model="vm.registration.lastName" />
+                    <div class="help-block validation" ng-show="regForm.lastName.$error.required">Last Name is required.</div>
+                </div>
+            </div>
+        </div>
+
+
+        <h3>New Login</h3>
+
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="form-group" ab-client-validate>
+                    <label for="email">Email <small class="glyphicon glyphicon-question-sign" uib-tooltip="You will use this email address to sign in to Air Bears."></small></label>
+                    <input id="email" name="email" type="email" class="form-control" required ng-model="vm.registration.email" />
+                    <div class="help-block validation" ng-show="regForm.email.$error.required">Email is required.</div>
+                    <div class="help-block validation" ng-show="regForm.email.$error.email">Email must be valid.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group" ab-client-validate>
+                    <label for="password">
+                        Password
+                        <small class="glyphicon glyphicon-question-sign" 
+                               uib-tooltip-template="'app/common/password-requirements-template.html'"></small>
+                    </label>
+                    <input id="password" name="password" type="password" class="form-control" required ng-model="vm.registration.password" />
+                    <div class="help-block validation" ng-show="regForm.password.$error.required">Password is required.</div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="form-group" ab-client-validate>
+                    <label for="confirmedPassword">Password Confirmed</label>
+                    <input id="confirmedPassword" name="confirmedPassword" type="password" class="form-control" required ab-compare-to="vm.registration.password" ng-model="vm.registration.confirmPassword" />
+                    <div class="help-block validation" ng-show="regForm.confirmedPassword.$error.required">Confirmed Password is required.</div>
+                    <div class="help-block validation" ng-show="regForm.confirmedPassword.$error.compareTo">Passwords don't match.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div vc-recaptcha key="'6LfWxSETAAAAAMloyGsgTNoUWJF12RdxgRBqRBZm'" ng-model="vm.registration.captchaResponse"></div>
+                    <div class="help-block" ng-show="regForm.$submitted && regForm.$error.recaptcha">Please verify that you're human.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="form-control btn btn-success" value="Register" ng-disabled="vm.isSubmitting" />
+        </div>
+    </form>
+</div>
+
+<div class="col-sm-4">
+    <h3>Approval Process</h3>
+    <p>
+        Air Bears representatives contact all registered incident commanders to ensure legitimacy. Once a registed incident commander has
+        been approved, they will have unrestricted access to our UAS pilot locator.
+    </p>
+</div>
