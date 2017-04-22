@@ -1,5 +1,9 @@
 'use strict';
 
-module.exports = (() => {
-	return {}
-})();
+const Sequelize = require('sequelize')
+const db = new Sequelize('airbears', 'AIRBEARS_USERNAME', 'AIRBEARS_PASSWORD', {
+	dialect: 'mysql'
+})
+db.$ = Sequelize
+
+module.exports = db
