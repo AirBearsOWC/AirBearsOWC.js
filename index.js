@@ -11,11 +11,13 @@ const baseServer = http.createServer(httpServer)
 const DB = require('./db/_connection')
 
 baseServer
-	.listen('3000', () => console.log(Date().toLocaleString()))
+	.listen('3000', () => {
+		console.log(Date().toLocaleString())
+		console.log('Running on port 3000')
+	})
 
 httpServer
 	.use('/', express.static('./public'))
-	.use('/vendor', express.static('./node_modules'))
 	.use(bodyParser.json())
 	.use(cookieParser())
 
