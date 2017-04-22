@@ -8,8 +8,8 @@ const http = require('http')
 const httpServer = express()
 const baseServer = http.createServer(httpServer)
 
-const DB = require('./db/_connection')
-const User = require('./db/user')
+const db = require('./db/_connection')
+const User = db.models.user
 
 baseServer
 	.listen('3000', () => {
