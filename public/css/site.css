@@ -21,8 +21,8 @@ input, select, textarea {
 }
 
 .navbar-inverse {
-    background-color: rgba(60,60,60,0.85);
-    border-bottom: #555;
+    background-color: #13293D;
+    border-bottom: #791316;
 }
 
 .navbar-brand > img {
@@ -42,7 +42,7 @@ input, select, textarea {
 .navbar-inverse .navbar-nav > li > a, 
 .navbar-inverse .navbar-text, 
 .navbar-inverse .navbar-brand {
-    color: #eee;
+    color: #FFFFFF;
 }
 
 .navbar-inverse .navbar-nav a {
@@ -53,34 +53,34 @@ input, select, textarea {
 .navbar-inverse .navbar-nav > .active > a:focus, 
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav> li > a:hover {
-    color: #fff;
-    background: rgba(30,30,30,0.65);
+    color: #FFFFFF;
+    background: #C6D2EB;
 }
 
 .navbar-inverse .navbar-nav > .open > a, 
 .navbar-inverse .navbar-nav > .open > a:focus, 
 .navbar-inverse .navbar-nav > .open > a:hover {
-    color: #fff;
-    background: rgba(10,10,10,0.55);
+    color: #FFFFFF;
+    background: #13293D;
 }
 
 .navbar .dropdown-menu {
-     background-color: rgba(60,60,60,.85);
+     background-color: #13293D;
      border: 0;
 }
 
 .navbar .dropdown-menu a {
-    color: #fff;
+    color: #FFFFFF;
 }
 
 .navbar .dropdown-menu a.active,
 .navbar .dropdown-menu a:hover {
-    color: #fff;
-    background: rgba(30,30,30,0.65);
+    color: #FFFFFF;
+    background: #13293D;
 }
 
 .navbar .dropdown-menu>.active>a, .navbar .dropdown-menu>.active>a:focus, .navbar .dropdown-menu>.active>a:hover {
-    background: rgba(10,10,10,.55);
+    background: #13293D;
 }
 
 .navbar .dropdown-header, 
@@ -226,7 +226,7 @@ ol ol > li {
 }
 
 .white-bg {
-    background-color: #fff;
+    background-color: #FFFFFF;
     position: absolute;
     width: 100%;
     height: 1750px;
@@ -254,7 +254,7 @@ ol ol > li {
     position: relative;
     z-index: 10;
     background: rgba(30,30,30,0.6);
-    color: #fff;
+    color: #FFFFFF;
     text-shadow: 1px 2px #000;
 }
 
@@ -331,8 +331,12 @@ ol ol > li {
 }
 
 .mix-white-text {
-    color: #FFF;
+    color: #FFFFFF;
 }
 
 .mix-bottom-padding {
+}
+
+.nav-CTA {
+    background-color: #F36C24;
 }
