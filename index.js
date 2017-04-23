@@ -71,6 +71,11 @@ API
 				res.json({success: true, users})
 			})
 		})
+		.get(	'/pilots', (req, res) => {
+			User.findAll({where: {role: "pilot"}}).then((users) => {
+				res.json({success: true, users})
+			})
+		})
 		.get(	'/:id', (req, res) => {
 			User.findById(req.params.id).then((user) => {
 				if(user){
