@@ -27,6 +27,10 @@ baseServer
 // Middleware
 httpServer
 	.use('/', express.static('./public'))
+	.all('/*', function(req, res, next) {
+	    // Just send the index.html for other files to support HTML5Mode
+	    res.sendFile('./public/index.html', { root: __dirname });
+	})
 	.use(bodyParser.json())
 	.use(cookieParser())
 	.use(session({
