@@ -1,29 +1,38 @@
 'use strict';
 
 const db = require('./_connection')
+const $ = db.Sequelize
+
 module.exports = db.define('user', {
 	id: {
-		type: db.$.INTEGER,
+		type: $.INTEGER,
 		allowNull: false,
 		unique: true,
 		autoIncrement: true,
 		primaryKey: true
 	},
-	firstname: {	type: db.$.STRING, allowNull: false },
-	lastname: {		type: db.$.STRING, allowNull: false },
-	email: {		type: db.$.STRING, allowNull: false, unique: true},
-	password: {		type: db.$.STRING, allowNull: false },
-	country: {		type: db.$.STRING, allowNull: false },
-	role: {			type: db.$.STRING, allowNull: false },
-	is_active: {	type: db.$.BOOLEAN, allowNull: false },
-	phone: {		type: db.$.STRING },
-	address: {		type: db.$.STRING },
-	address2: {		type: db.$.STRING },
-	city: {			type: db.$.STRING },
-	state: {		type: db.$.STRING },
-	organization: {	type: db.$.STRING },
-	title: {		type: db.$.STRING },
-	dob: {			type: db.$.STRING },
-	zip: {			type: db.$.STRING },
-	admin_notes: {	type: db.$.TEXT }
+	firstName: 					{ type: $.STRING },
+	lastName: 					{ type: $.STRING },
+	email: 						{ type: $.STRING },
+	password: 					{ type: $.STRING },
+	country: 					{ type: $.STRING },
+	isActive: 					{ type: $.BOOLEAN },
+	phone: 						{ type: $.STRING },
+	street1: 					{ type: $.STRING },
+	street2: 					{ type: $.STRING },
+	addressLine1:				{ type: $.STRING },
+	addressLine2:				{ type: $.STRING },
+	addressLine3:				{ type: $.STRING },
+	addressLine4:				{ type: $.STRING },
+	city:						{ type: $.STRING },
+	state:						{ type: $.STRING },
+	zip:						{ type: $.STRING },
+	bio:						{ type: $.TEXT },
+	adminNotes:					{ type: $.TEXT },
+	teeShirtSize:				{ type: $.STRING },
+	teeShirtMailedDate:			{ type: $.STRING },
+	allowsPilotSearch:			{ type: $.BOOLEAN },
+	role:						{ type: $.STRING },
+	subscribesToUpdates:		{ type: $.BOOLEAN },
+	hasInternationalAddress:	{ type: $.BOOLEAN }
 })
