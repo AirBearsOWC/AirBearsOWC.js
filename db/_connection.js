@@ -2,9 +2,9 @@
 
 const ENV = require('../environment')
 const Sequelize = require('sequelize')
-const db = new Sequelize('airbears', null, null, {
+const db = new Sequelize((process.env.DATABASE_URL || 'airbears'), null, null, {
 	dialect: 'postgresql',
-	host: 'localhost'
+	protocol: 'postgres'
 })
 db.Sequelize = Sequelize
 module.exports = db
