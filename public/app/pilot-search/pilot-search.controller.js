@@ -26,9 +26,43 @@
             { value: 500, name: "500 miles" },
             { value: 1000, name: "1000 miles" }
         ];
+        vm.payloads = [
+            {
+                "name": "Any"
+            },
+            {
+                "id": "7765e25b-4627-4cfe-c566-08d3569d9dc6",
+                "name": "None",
+                "sortOrder": 0
+            },
+            {
+                "id": "73536636-e4b8-49c4-c567-08d3569d9dc6",
+                "name": "1 Pound",
+                "sortOrder": 1
+            },
+            {
+                "id": "242fec0b-aef6-431d-c568-08d3569d9dc6",
+                "name": "2 Pounds",
+                "sortOrder": 2
+            },
+            {
+                "id": "fa346300-600d-4a77-c569-08d3569d9dc6",
+                "name": "3 Pounds",
+                "sortOrder": 3
+            },
+            {
+                "id": "c909d0bd-f1f7-4a7e-c56a-08d3569d9dc6",
+                "name": "4 Pounds",
+                "sortOrder": 4
+            },
+            {
+                "id": "3bf38916-fa91-4e98-c56b-08d3569d9dc6",
+                "name": "5+ Pounds",
+                "sortOrder": 5
+            }
+        ];
         vm.flightTimes = [
             {
-                "id": "Placeholder",
                 "name": "Any"
             },
             {
@@ -55,8 +89,13 @@
 
         vm.isSearching = false;
 
+        vm.advancedFiltersOpen = false;
         vm.filterICS = false;
         vm.filterPart107 = false;
+        vm.filterNightVision = false;
+        vm.filterThermalVision = false;
+        vm.filterHamRadio = false;
+        vm.payloadFilter = null;
         vm.flightTimeFilter = null;
 
         vm.toggleMarkerWindow = toggleMarkerWindow;
@@ -142,6 +181,7 @@
                 filterSearchResults();
                 vm.isSearching = false;
                 vm.currentPage = 1;
+                vm.advancedFiltersOpen = false;
             }, 
             function (resp) {
                 vm.isSearching = false;
@@ -152,17 +192,18 @@
         }
 
         function filterSearchResults() {
-            function filterBool(keyName) {
+            function filterBool(result, keyName) {
                 return result[keyName] === true;
             }
 
-            function filterIcs(result) {
-                return result.femaIcsCertified === true;
-            }
+            var filterPayload = function(result) {
+                if(result.payload) {
+                    return result.payload.name === this.payloadFilter.name;
+                }
+                return false;
+            };
 
-            function filterPart107(result) {
-                return result.faaPart107Certified === true;
-            }
+            filterPayload = filterPayload.bind(vm);
 
             var filterFlightTime = function(result) {
                 if(result.flightTime) {
@@ -179,12 +220,34 @@
             }
             var filtered = vm.results;
             if(vm.filterICS) {
-                filtered = filtered.filter(filterIcs);
+                filtered = filtered.filter(function(result){
+                    return filterBool(result, 'femaIcsCertified');
+                });
             }
             if(vm.filterPart107) {
-                filtered = filtered.filter(filterPart107);
+                filtered = filtered.filter(function(result){
+                    return filterBool(result, 'faaPart107Certified')
+                });
             }
-            if(vm.flightTimeFilter && vm.flightTimeFilter.name !== 'Any') {
+            if(vm.filterNightVision) {
+                filtered = filtered.filter(function(result){
+                    return filterBool(result, 'nightVisionCapable')
+                });
+            }
+            if(vm.filterThermalVision) {
+                filtered = filtered.filter(function(result){
+                    return filterBool(result, 'thermalVisionCapable')
+                });
+            }
+            if(vm.filterHamRadio) {
+                filtered = filtered.filter(function(result){
+                    return filterBool(result, 'hamRadioLicensed')
+                });
+            }
+            if(vm.payloadFilter && vm.payloadFilter.name !== "Any") {
+                filtered = filtered.filter(filterPayload);
+            }
+            if(vm.flightTimeFilter && vm.flightTimeFilter.name !== "Any") {
                 filtered = filtered.filter(filterFlightTime);
             }
             vm.filteredResults = filtered;
