@@ -1,6 +1,6 @@
 'use strict';
 
-const ENV = require('../env.json')
+const ENV = require('../environment')
 const Sequelize = require('sequelize')
 const db = new Sequelize('airbears', null, null, {
 	dialect: 'postgresql',

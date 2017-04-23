@@ -16,7 +16,7 @@ const db = require('./db/_connection')
 const User = db.models.user
 const Drone = db.models.drone
 
-const ENV = require('./env.json')
+const ENV = require('./environment')
 
 baseServer
 	.listen('3000', () => {
