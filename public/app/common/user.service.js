@@ -18,17 +18,16 @@
         return service;
 
         function getCurrentUser() {
-            return $http.get("/api/me").then(function (resp) {
-                var user = resp.data;
-
-                if (user.roles.indexOf("Admin") >= 0)
+            return $http.get("/api/sessions").then(function (resp) {
+                var user = resp.data.user;
+                if (user.role.indexOf("Admin") >= 0)
                 {
                     user.isAdmin = true;
                 }
 
-                if (user.roles.indexOf("Authority") >= 0) {
-                    user.isAuthority = true;
-                }
+                // if (user.roles.indexOf("Authority") >= 0) {
+                //     user.isAuthority = true;
+                // }
 
                 return user;
             }, function (resp) {

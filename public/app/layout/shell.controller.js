@@ -20,9 +20,10 @@
                 activate();
 
                 function activate() {
-                    if (authService.getAuthToken()) {
-                        getCurrentUser();
-                    }
+                    // if (authService.getAuthToken()) {
+                    //     getCurrentUser();
+                    // }
+					getCurrentUser();
 
                     authService.onLogin($scope, function () {
                         getCurrentUser();

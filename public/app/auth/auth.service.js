@@ -36,13 +36,18 @@
         }
 
         function authenticate(email, password) {
-            return $http.post(urlBase + "token", { email: email, password: password })
-                .success(function (resp) {
-                    $rootScope.$broadcast("LOG_IN");
-                    store.set("auth_token", resp.token);
-                }).error(function (resp) {
-                    return resp;
-                });
+			return $http.post('/api/sessions', {user: {email: email, password: password}})
+				.success(function(resp){
+					$rootScope.$broadcast("LOG_IN");
+					store.set("auth_token", "temp");	
+				})
+            // return $http.post(urlBase + "token", { email: email, password: password })
+            //     .success(function (resp) {
+                    // $rootScope.$broadcast("LOG_IN");
+                    // store.set("auth_token", resp.token);
+            //     }).error(function (resp) {
+            //         return resp;
+            //     });
         }
 
         function logout() {
