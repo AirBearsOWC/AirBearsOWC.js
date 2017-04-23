@@ -70,7 +70,7 @@ API
 API
 	.route('/users')
 		.get(	'/', (req, res) => {
-			User.findAll().then((users) => {
+			User.findAll({where: req.query}).then((users) => {
 				res.json({success: true, users})
 			})
 		})
@@ -110,7 +110,9 @@ API
 API
 	.route('/pilots')
 		.get('/', (req, res) => {
-			User.findAll({where: {role: "pilot"}}).then((users) => {
+			let query = req.query
+			query.role = "pilot"
+			User.findAll({where: query}).then((users) => {
 				res.json({success: true, users})
 			})
 		})
@@ -118,7 +120,7 @@ API
 API
 	.route('/drones')
 		.get('/', (req, res) => {
-			Drone.findAll().then((drones) => {
+			Drone.findAll({where: req.query}).then((drones) => {
 				res.json({success: true, drones})
 			})
 		})
