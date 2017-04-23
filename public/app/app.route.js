@@ -14,12 +14,31 @@
         $stateProvider
             .state("root", {
                 template: "<shell></shell>",
-                abstract: true
+                abstract: true,
+                resolve: {
+                    authService: "authService"
+                }
             })
             .state("root.home", {
                 url: "/",
                 templateUrl: "app/pilot-search/pilot-search.html",
                 controller: "PilotSearchController as vm"
+            })
+            .state("root.login", {
+                url: "/login",
+                templateUrl: "app/pilot-search/pilot-search.html",
+                controller: "PilotSearchController as vm",
+                onEnter: ['authService', function(authService) {
+                    authService.openLogin();
+                }]
+            })
+            .state("root.register", {
+                url: "/register",
+                templateUrl: "app/pilot-search/pilot-search.html",
+                controller: "PilotSearchController as vm",
+                onEnter: ['authService', function(authService) {
+                    authService.openLogin();
+                }]
             })
             .state("root.register-pilot", {
                 abstract: true,
