@@ -14,7 +14,7 @@
         service.registerPilot = registerPilot;
         service.registerPrepaidPilot = registerPrepaidPilot;
         service.registerAuthority = registerAuthority;
-        service.openRegistationOptions = openRegistationOptions;
+        service.openRegistrationOptions = openRegistrationOptions;
 
         return service;
 
@@ -30,7 +30,7 @@
             return $http.post(urlBase + "accounts/authority-registration", registration);
         }
 
-        function openRegistationOptions() {
+        function openRegistrationOptions() {
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: "app/registration/register-options-modal.html",

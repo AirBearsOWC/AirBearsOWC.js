@@ -201,3 +201,10 @@ API
 				}
 			})
 		})
+
+	// Fix for express to work with HTML5Mode in angular ui-router
+	// @see https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions#how-to-configure-your-server-to-work-with-html5mode
+	httpServer.all('/*', function(req, res, next) {
+	    // Just send the index.html for other files to support HTML5Mode
+	    res.sendFile('./public/index.html', { root: __dirname });
+	})
