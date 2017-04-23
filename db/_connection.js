@@ -1,9 +1,14 @@
 'use strict';
 
+const ENV = require('../env.json')
 const Sequelize = require('sequelize')
-const db = new Sequelize('airbears', 'AIRBEARS_USERNAME', 'AIRBEARS_PASSWORD', {
-	dialect: 'mysql'
-})
+const db = new Sequelize('airbears',
+	ENV.DB_USERNAME,
+	ENV.DB_PASSWORD,
+	{
+		dialect: 'mysql'
+	}
+)
 db.Sequelize = Sequelize
 module.exports = db
 

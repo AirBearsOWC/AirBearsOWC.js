@@ -15,6 +15,8 @@ const db = require('./db/_connection')
 const User = db.models.user
 const Drone = db.models.drone
 
+const ENV = require('./env.json')
+
 baseServer
 	.listen('3000', () => {
 		console.log(Date().toLocaleString())
@@ -27,7 +29,7 @@ httpServer
 	.use(cookieParser())
 	.use(session({
 		store: new (sessionFileStore(session)),
-		secret: 'ayy',
+		secret: ENV.SECRET,
 		resave: false,
 		saveUninitialized: false
 	}))
