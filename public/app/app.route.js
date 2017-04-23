@@ -18,7 +18,8 @@
             })
             .state("root.home", {
                 url: "/",
-                template: "<home></home>"
+                templateUrl: "app/pilot-search/pilot-search.html",
+                controller: "PilotSearchController as vm"
             })
             .state("root.register-pilot", {
                 abstract: true,
@@ -54,31 +55,6 @@
                     user: null
                 }
             })
-            .state("root.privacy-policy", {
-                url: "/privacy",
-                template: "<privacy></privacy>",
-            })
-            .state("root.terms-of-service", {
-                 url: "/terms",
-                 template: "<terms></terms>",
-            })
-            .state("root.refund-policy", {
-                url: "/refund",
-                template: "<refund></refund>",
-            })
-            .state("root.contact", {
-                url: "/contact",
-                template: "<contact></contact>",
-            })
-            .state("root.guidelines", {
-                url: "/guidelines",
-                template: "<guidelines></guidelines>",
-            })
-            .state("root.resources", {
-                url: "/resources",
-                templateUrl: "app/resources/resources.html",
-                controller: "ResourcesController as vm"
-            })
             .state("root.pilot-search", {
                 url: "/pilot-search",
                 templateUrl: "app/pilot-search/pilot-search.html",
@@ -101,24 +77,6 @@
                 params: {
                     pilot: null
                 }
-            })
-            .state("root.post-archive", {
-                url: "/posts",
-                template: "<post-archive></post-archive>"
-            })
-            .state("root.post", {
-                url: "/posts/:slug",
-                template: "<post></post>"
-            })
-            .state("root.manage-posts", {
-                url: "/manage-posts",
-                templateUrl: "app/manage/manage-posts.html",
-                controller: "ManagePostsController as vm"
-            })
-            .state("root.edit-post", {
-                url: "/manage-posts/:postId",
-                templateUrl: "app/manage/edit-post.html",
-                controller: "EditPostController as vm"
             })
             .state("root.prepaid-registration", {
                 url: "/prepaid-registration",
