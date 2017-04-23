@@ -13,6 +13,7 @@ module.exports = db.define('drone', {
 	},
 	make:					{ type: $.STRING, allowNull: false },
 	model:					{ type: $.STRING, allowNull: false },
+	payload:				{ type: $.INTEGER, defaultValue: 0 },
 	maxFlightTime:			{ type: $.INTEGER },
 	nightVisionCapable:		{ type: $.BOOLEAN },
 	thermalVisionCapable:	{ type: $.BOOLEAN }
