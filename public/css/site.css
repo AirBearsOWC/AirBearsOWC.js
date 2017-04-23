@@ -1,8 +1,11 @@
+
 ﻿html, body {
     height: 100%;
 }
 
 body {
+    /*font-family: 'Roboto Slab', serif;*/
+    font-family: 'Roboto', sans-serif;
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -12,11 +15,6 @@ body {
     padding-right: 15px;
     padding-bottom: 50px;
 }
-
-.page-view {
-    
-}
-
 
 input, select, textarea {
      max-width: 100% !important; 
