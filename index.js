@@ -13,6 +13,7 @@ const baseServer = http.createServer(httpServer)
 
 const db = require('./db/_connection')
 const User = db.models.user
+const Drone = db.models.drone
 
 baseServer
 	.listen('3000', () => {
@@ -111,6 +112,30 @@ API
 		.get('/', (req, res) => {
 			User.findAll({where: {role: "pilot"}}).then((users) => {
 				res.json({success: true, users})
+			})
+		})
+
+API
+	.route('/drones')
+		.get('/', (req, res) => {
+			Drone.findAll().then((drones) => {
+				res.json({success: true, drones})
+			})
+		})
+		.get('/user/:id', (req, res) => {
+			User.findById(req.params.id).then((user) => {
+				return user.getDrones()
+			}).then((drones) => {
+				res.json({success: true, drones})
+			})
+		})
+		.post('/user/:id', (req, res) => {
+			User.findById(req.params.id).then((user) => {
+				return user.createDrone(req.body.drone)
+			}).then((drone) => {
+				res.json({success: true, drone})
+			}).catch((error) => {
+				res.json({success: false, error: error.message})
 			})
 		})
 

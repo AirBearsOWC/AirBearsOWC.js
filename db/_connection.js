@@ -9,3 +9,7 @@ module.exports = db
 
 require('./user')
 require('./drone')
+const User = db.models.user
+const Drone = db.models.drone
+User.hasMany(Drone, {as: 'Drones'})
+Drone.belongsTo(User)
