@@ -4,6 +4,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const http = require('http')
+const session = require('express-session')
+const sessionFileStore = require('session-file-store')
 
 const httpServer = express()
 const baseServer = http.createServer(httpServer)
@@ -21,9 +23,16 @@ httpServer
 	.use('/', express.static('./public'))
 	.use(bodyParser.json())
 	.use(cookieParser())
+	.use(session({
+		store: new (sessionFileStore(session)),
+		secret: 'ayy',
+		resave: false,
+		saveUninitialized: false
+	}))
 
 httpServer
 	.get('/', (req, res) => {
+		console.log(req.session)
 		res.sendFile(__dirname + '/public/src.html')
 	})
 
