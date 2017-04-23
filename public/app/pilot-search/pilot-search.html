@@ -99,14 +99,14 @@
                         ng-class="{ active: pilot.show }">
 
                         <strong>Name:</strong>&nbsp;{{ pilot.firstName }} {{ pilot.lastName }}
-                        <span class="badge">{{ pilot.distance | number:2 }} miles</span>
+                        <span class="badge badge-primary">{{ pilot.distance | number:2 }} miles</span>
                         <br />
                         <strong>Email:</strong>&nbsp;<a href="mailto:{{ pilot.email }}">{{ pilot.email }}</a>
                         <br/>
                         <strong>Flight Time:</strong>&nbsp;{{pilot.flightTime.name || 'Not provided'}}<br/>
                         <strong>Payload:</strong>&nbsp;{{pilot.payload.name || 'Not provided'}}<br/>
-                        <span class="badge" ng-show="pilot.femaIcsCertified">FEMA ICS Certified</span>
-                        <span class="badge" ng-show="pilot.faaPart107Certified">FAA Part 107 Certified</span>
+                        <span class="badge float-none badge-info" ng-show="pilot.femaIcsCertified">FEMA ICS Certified</span>
+                        <span class="badge float-none badge-info" ng-show="pilot.faaPart107Certified">FAA Part 107 Certified</span>
                     </li>
                     <li class="list-group-item" ng-show="vm.results.totalCount === 0">
                         No pilots were found. Try expanding your search distance.

@@ -1,5 +1,5 @@
 ﻿
-﻿html, body {
+html, body {
     height: 100%;
 }
 
@@ -22,21 +22,47 @@ input, select, textarea {
 
 .navbar-inverse {
     background-color: #13293D;
-    border-bottom: #791316;
+    border-bottom: 5px solid #791316;
+}
+
+.navbar-inverse.footer-navbar {
+    border-bottom-color: transparent;
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-header {
+    flex: 0 0 auto;
+    margin-bottom: -10px;
+}
+
+.navbar-right {
+    display: inline-flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+}
+
+.navbar-brand {
+    float: none;
+    display: inline-block;
+    height: auto;
+    line-height: auto;
 }
 
 .navbar-brand > img {
     height: 40px;
     display: inline-block;
-    position: relative;
-    top: -10px;
     -webkit-filter: brightness(155%);
+    vertical-align: middle;
 }
 
 .navbar-brand > span {
     position: relative;
-    top: -9px;
     font-size: 15px;
+    vertical-align: middle;
 }
 
 .navbar-inverse .navbar-nav > li > a, 
@@ -53,7 +79,7 @@ input, select, textarea {
 .navbar-inverse .navbar-nav > .active > a:focus, 
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav> li > a:hover {
-    color: #FFFFFF;
+    color: #13293D;
     background: #C6D2EB;
 }
 
@@ -236,8 +262,8 @@ ol ol > li {
 }
 
 .footer p {
-    text-indent: 40px;
-    margin-top: 20px;
+    text-indent: 55px;
+    margin: 20px 0 20px;
 }
 
 .white-bg {
@@ -322,7 +348,55 @@ ol ol > li {
     Modal Overrides
 */
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-wrap: wrap;
+    }
+
+    .navbar-header {
+        flex: 1 1 100%;
+        align-items: center;
+        margin-bottom: 0;
+        display: flex;
+    }
+
+    .navbar-brand {
+        flex: 1 1 auto;
+    }
+
+    .navbar-collapse {
+        flex: 1 1 100%;
+        flex-wrap: wrap;
+    }
+
+    .navbar-right {
+        display: block;
+    }
+
+    .navbar-footer .navbar-brand {
+        flex: 1 1 100%;
+    }
+
+    .navbar-footer .navbar-nav {
+        margin: 0;
+        flex: 1 1 100%;
+    }
+
+    .navbar-footer {
+        text-align: center;
+    }
+
+    .navbar-footer .container p {
+        width: 100%;
+        text-indent: 0;
+    }
+
+    .footer {
+        height: auto;
+    }
+}
+
+@media (min-width: 769px) {
     .modal-dialog {
         margin: 135px auto;
     }
@@ -330,6 +404,20 @@ ol ol > li {
     .modal-sm {
         /* We want the small modal to be a bit bigger */
         width: 400px;
+    }
+
+    .navbar-collapse.collapse {
+        display: inline-flex!important;
+        vertical-align: middle;
+        flex: 1 1 auto;
+    }
+
+    .navbar-nav>li>a {
+        margin-bottom: -10px;
+    }
+
+    .navbar-footer .navbar-nav>li>a {
+        margin-bottom: 0px;
     }
 }
 
@@ -344,4 +432,13 @@ ol ol > li {
 .mass-email-recipients {
     word-break: break-word;
     word-wrap: break-word;
+}
+
+.list-group-item>.badge.float-none {
+    float: none;
+}
+
+.navbar .dropdown-menu li a:hover {
+    background-color: #C6D2EB;
+    color: #13293D;
 }
