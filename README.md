@@ -8,6 +8,10 @@ npm install -g bower
 npm install
 bower install
 gulp build
+# Start MySQL somehow, then
+# Migrate and seed
+node ./db/_migrate
+node ./db/_seed
 # Start Nodemon
 nodemon
 ```
