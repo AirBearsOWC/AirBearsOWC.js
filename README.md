@@ -10,7 +10,7 @@ npm install
 bower install
 gulp build
 # Create env.json (see sample.env.json), then
-# Start MySQL somehow, then
+# Start Postgresql, then
 # Migrate and seed
 node ./db/_migrate
 node ./db/_seed

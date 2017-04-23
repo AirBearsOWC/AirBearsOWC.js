@@ -2,13 +2,10 @@
 
 const ENV = require('../env.json')
 const Sequelize = require('sequelize')
-const db = new Sequelize('airbears',
-	ENV.DB_USERNAME,
-	ENV.DB_PASSWORD,
-	{
-		dialect: 'mysql'
-	}
-)
+const db = new Sequelize('airbears', null, null, {
+	dialect: 'postgresql',
+	host: 'localhost'
+})
 db.Sequelize = Sequelize
 module.exports = db
 
