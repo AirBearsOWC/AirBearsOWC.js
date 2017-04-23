@@ -1,0 +1,40 @@
+[
+	{
+		"firstname":	"Alan",
+		"lastname":		"Anderson",
+		"email":		"aaa@aaa.com",
+		"password":		"aaa",
+		"country":		"US",
+		"role":			"pilot",
+		"is_active":	true,
+		"phone":		"",
+		"address":		"",
+		"address2":		"",
+		"city":			"",
+		"state":		"",
+		"organization":	"",
+		"title":		"",
+		"dob":			"",
+		"zip":			"",
+		"admin_notes":	""
+	},
+	{
+		"firstname":	"Bob",
+		"lastname":		"Bobson",
+		"email":		"bbb@bbb.com",
+		"password":		"bbb",
+		"country":		"US",
+		"role":			"commander",
+		"is_active":	true,
+		"phone":		"",
+		"address":		"",
+		"address2":		"",
+		"city":			"",
+		"state":		"",
+		"organization":	"",
+		"title":		"",
+		"dob":			"",
+		"zip":			"",
+		"admin_notes":	""
+	}
+]
