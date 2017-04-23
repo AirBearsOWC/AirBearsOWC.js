@@ -133,6 +133,10 @@
                 </ui-gmap-markers>
             </ui-gmap-google-map>
 
+            <br/>
+
+            <a class="btn btn-primary" ng-hide="!vm.massEmailRecipients.length && !vm.massEmailInitialRecipient.length" href="mailto:{{vm.massEmailInitialRecipient}}{{vm.massEmailRecipients.length ? '?bcc=' : null}}{{vm.massEmailRecipients}}">Email Selected Pilots</a>
+
             <div ng-hide="vm.user">
                 <div class="row">
                     <div class="col-sm-3">

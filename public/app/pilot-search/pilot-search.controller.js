@@ -86,6 +86,8 @@
                 "sortOrder": 3
             }
         ];
+        vm.massEmailInitialRecipient = '';
+        vm.massEmailRecipients = '';
 
         vm.isSearching = false;
 
@@ -124,6 +126,20 @@
 
         function selectPilot(pilot) {
             pilot.show = !pilot.show;
+            if(pilot.show) {
+                if(!vm.massEmailInitialRecipient.length) {
+                    vm.massEmailInitialRecipient = pilot.email;
+                } else {
+                    vm.massEmailRecipients += vm.massEmailRecipients.length ? ''.concat(';', pilot.email) : pilot.email;
+                }
+            } else {
+                if(vm.massEmailInitialRecipient.length) {
+                    if(vm.massEmailInitialRecipient === pilot.email) {
+                        vm.massEmailInitialRecipient = '';
+                    }
+                }
+                vm.massEmailRecipients = vm.massEmailRecipients.replace(vm.massEmailRecipients.indexOf(';') !== -1 ? ';'.concat(pilot.email) : pilot.email, '');
+            }
         }
 
         function toggleMarkerWindow(marker, eventName, model) {
