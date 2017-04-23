@@ -135,7 +135,14 @@
 
             <br/>
 
-            <a class="btn btn-primary" ng-hide="!vm.massEmailRecipients.length && !vm.massEmailInitialRecipient.length" href="mailto:{{vm.massEmailInitialRecipient}}{{vm.massEmailRecipients.length ? '?bcc=' : null}}{{vm.massEmailRecipients}}">Email Selected Pilots</a>
+            <div ng-show="vm.massEmailRecipients.length && (vm.user.isAdmin || vm.user.isAuthority)">
+                <h4>Pilot emails: </h4>
+                <div class="well well-small">
+                    <p>
+                        {{vm.massEmailRecipients}}
+                    </p>
+                </div>
+            </div>
 
             <div ng-hide="vm.user">
                 <div class="row">
