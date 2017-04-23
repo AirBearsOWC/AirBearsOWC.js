@@ -98,6 +98,16 @@ input, select, textarea {
     height: 500px;
     background-position: 0px -254px;
 }
+@media (max-width: 768px) {
+    .bg-img {
+        background-position: 1100px -254px;
+    }
+}
+
+.bg-img-container {
+    position: relative;
+    height: 400px;
+}
 
 .vert-margin {
     margin-top: 15px;
@@ -220,9 +230,14 @@ ol ol > li {
 }
 
 .footer {
-    background-color: #333;
-    color: #ddd;
-    padding: 20px 0px;
+    color: #FFFFFF;
+    width: 100%;
+    height: 120px;   /* Height of the footer */
+}
+
+.footer p {
+    text-indent: 40px;
+    margin-top: 20px;
 }
 
 .white-bg {
@@ -248,14 +263,6 @@ ol ol > li {
         height: 140%;
         top: -61%;
     }
-}
-.jumbotron {
-    margin-top: 50px;
-    position: relative;
-    z-index: 10;
-    background: rgba(30,30,30,0.6);
-    color: #FFFFFF;
-    text-shadow: 1px 2px #000;
 }
 
 .photo {
@@ -326,17 +333,10 @@ ol ol > li {
     }
 }
 
-.mix-indent-text {
-    text-indent: 40px;
-}
-
-.mix-white-text {
-    color: #FFFFFF;
-}
-
-.mix-bottom-padding {
-}
-
 .nav-CTA {
     background-color: #F36C24;
+}
+
+.footer-navbar {
+    margin-bottom: 0px;
 }
