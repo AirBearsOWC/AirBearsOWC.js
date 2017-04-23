@@ -32,12 +32,6 @@ httpServer
 		saveUninitialized: false
 	}))
 
-httpServer
-	.get('/', (req, res) => {
-		console.log(req.session)
-		res.sendFile(__dirname + '/public/src.html')
-	})
-
 const API = express.Router()
 API.route = function(name){
 	const router = express.Router()
