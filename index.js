@@ -8,7 +8,8 @@ const http = require('http')
 const httpServer = express()
 const baseServer = http.createServer(httpServer)
 
-const DB = require('./db/_connection')
+const db = require('./db/_connection')
+const User = db.models.user
 
 const pilot_search_data = require('./mock_data/pilot_search.json');
 
@@ -27,36 +28,52 @@ httpServer
 	.get('/', (req, res) => {
 		res.sendFile(__dirname + '/public/src.html')
 	})
-	.post('/api/accounts/pilot-registration', echo)
-	.post('/api/accounts/prepaid-pilot-registration', echo)
-	.post('/api/accounts/authority-registration', echo)
-	.post('/api/accounts/forgot-password', echo)
-	.post('/api/accounts/reset-password', echo)
-	.get('/api/authority-users/:id', echo)
-	.get('/api/authority-users', echo)
-	.put('/api/authority-users/:id/approve', echo)
-	.post('/api/messages', echo)
-	.get('/api/pilots/:id', echo)
-	.get('/api/pilots', echo)
-	.post('/api/pilots/search', mockPilotSearchService)
-	.put('/api/pilots/:id/tee-shirt-mailed', echo)
-	.put('/api/pilots/me', echo)
-	.delete('/api/posts/:id', echo)
-	.get('/api/posts/:id', echo)
-	.get('/api/posts/:slug', echo)
-	.get('/api/posts', echo)
-	.post('/api/posts', echo)
-	.put('/api/posts', echo)
-	.get('/api/resources/states', echo)
-	.get('/api/resources/tee-shirt-sizes', echo)
-	.get('/api/resources/payloads', echo)
-	.get('/api/resources/flight-times', echo)
-	.post('/api/Token', echo)
-	.post('/api/payment-token', echo)
-	.get('/api/me/invite-users', echo)
-	.get('/api/me', mockAuth)
-	.post('/api/me/password', echo)
-	.get('/api/users/:id', echo)
+
+const API = express.Router()
+API.route = function(name){
+	const router = express.Router()
+	API[name.replace('/', '')] = router
+	API.use(name, router)
+	return router
+}
+API.RESTful = function(name){
+	const router = API.route(name)
+	router
+		.get(   '/', echo)
+		.get(   '/:id', echo)
+		.post(  '/', echo)
+		.put(   '/:id', echo)
+		.delete('/:id', echo)
+	return router
+}
+
+httpServer.use('/api', API)
+API
+	.route('/sessions')
+		.get(	'/', echo)
+		.post(	'/', echo)
+		.delete('/', echo)
+API
+	.route('/users')
+		.get(	'/', (req, res) => {
+			res.json(require('./db/sample/existing_users'))
+		})
+		.get(	'/:id', echo)
+		.post(	'/', echo)
+		.put(	'/:id', echo)
+		.delete('/:id', echo)
+
+API.route('/token').post('/', echo).get('/',echo)
+API.route('/me').get('/', mockAuth)
+API.route('/pilots').post('/search', mockPilotSearchService)
+
+API
+	.RESTful('/orgs')
+API
+	.RESTful('/drones')
+API
+	.RESTful('/missions')
+
 
 function echo(req, res){
 	res.json({
@@ -64,6 +81,7 @@ function echo(req, res){
 		headers: req.headers
 	})
 }
+
 
 function mockAuth(req, res) {
 	res.json({
