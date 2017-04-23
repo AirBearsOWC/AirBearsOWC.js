@@ -1,4 +1,4 @@
-
+﻿
 ﻿html, body {
     height: 100%;
 }
@@ -339,4 +339,9 @@ ol ol > li {
 
 .footer-navbar {
     margin-bottom: 0px;
+}
+
+.mass-email-recipients {
+    word-break: break-word;
+    word-wrap: break-word;
 }
