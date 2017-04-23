@@ -207,6 +207,9 @@ API
 		.get('/states', (req, res) => {
 			res.json(require('./resources/states'))
 		})
+		.get('/tee-shirt-sizes', (req, res) => {
+			res.json(require('./resources/shirts'))
+		})
 
 	// Fix for express to work with HTML5Mode in angular ui-router
 	// @see https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions#how-to-configure-your-server-to-work-with-html5mode
