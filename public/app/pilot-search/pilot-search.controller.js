@@ -28,6 +28,7 @@
         ];
         vm.isSearching = false;
         vm.filterICS = false;
+        vm.filterPart107 = false;
 
         vm.toggleMarkerWindow = toggleMarkerWindow;
         vm.selectPilot = selectPilot;
@@ -125,16 +126,30 @@
             function filterLogic(result) {
                 if(vm.filterICS) {
                     return result.femaIcsCertified === true;
-                } else {
-                    return typeof result !== 'undefined';
                 }
+                return typeof result !== 'undefined';
+            }
+
+            function filterIcs(result) {
+                return result.femaIcsCertified === true;
+            }
+
+            function filterPart107(result) {
+                return result.faaPart107Certified === true;
             }
 
             if(!vm.results || !vm.results.length) {
                 console.log('Nothing to filter!');
                 return;
             }
-            vm.filteredResults = vm.results.filter(filterLogic);
+            var filtered = vm.results;
+            if(vm.filterICS) {
+                filtered = filtered.filter(filterIcs);
+            }
+            if(vm.filterPart107) {
+                filtered = filtered.filter(filterPart107);
+            }
+            vm.filteredResults = filtered;
         }
 
         function pageChanged() {
