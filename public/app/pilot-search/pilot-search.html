@@ -46,6 +46,17 @@
                             </div>
                         </div>
 
+                        <uib-accordion>
+                            <div uib-accordion-group class="panel-default" heading="Advanced Search Filters">
+                                <div class="form-group">
+                                    <label>
+                                        <select class="form-control" ng-model="vm.flightTimeFilter" ng-options="d.name for d in vm.flightTimes" ng-change="vm.filterSearchResults()"></select>
+                                        Flight Time Capacity
+                                    </label>
+                                </div>
+                            </div>
+                        </uib-accordion>
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-success" ng-disabled="vm.isSearching || !vm.user" style="width: 100%;">
                                 <i class="glyphicon glyphicon-search"></i> Search

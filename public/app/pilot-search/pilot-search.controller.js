@@ -26,9 +26,38 @@
             { value: 500, name: "500 miles" },
             { value: 1000, name: "1000 miles" }
         ];
+        vm.flightTimes = [
+            {
+                "id": "Placeholder",
+                "name": "Any"
+            },
+            {
+                "id": "8212bf81-ba01-4a3b-39ef-08d3569d9ddc",
+                "name": "1-2 Minutes",
+                "sortOrder": 0
+            },
+            {
+                "id": "896cbc67-f3f8-4e57-39f0-08d3569d9ddc",
+                "name": "2-5 Minutes",
+                "sortOrder": 1
+            },
+            {
+                "id": "e136336b-3fda-429e-39f1-08d3569d9ddc",
+                "name": "5-10 Minutes",
+                "sortOrder": 2
+            },
+            {
+                "id": "8de6ea3d-0349-40fc-39f2-08d3569d9ddc",
+                "name": "10+ Minutes",
+                "sortOrder": 3
+            }
+        ];
+
         vm.isSearching = false;
+
         vm.filterICS = false;
         vm.filterPart107 = false;
+        vm.flightTimeFilter = null;
 
         vm.toggleMarkerWindow = toggleMarkerWindow;
         vm.selectPilot = selectPilot;
@@ -123,11 +152,8 @@
         }
 
         function filterSearchResults() {
-            function filterLogic(result) {
-                if(vm.filterICS) {
-                    return result.femaIcsCertified === true;
-                }
-                return typeof result !== 'undefined';
+            function filterBool(keyName) {
+                return result[keyName] === true;
             }
 
             function filterIcs(result) {
@@ -137,6 +163,15 @@
             function filterPart107(result) {
                 return result.faaPart107Certified === true;
             }
+
+            var filterFlightTime = function(result) {
+                if(result.flightTime) {
+                    return result.flightTime.name === this.flightTimeFilter.name;
+                }
+                return false;
+            };
+
+            filterFlightTime = filterFlightTime.bind(vm);
 
             if(!vm.results || !vm.results.length) {
                 console.log('Nothing to filter!');
@@ -148,6 +183,9 @@
             }
             if(vm.filterPart107) {
                 filtered = filtered.filter(filterPart107);
+            }
+            if(vm.flightTimeFilter && vm.flightTimeFilter.name !== 'Any') {
+                filtered = filtered.filter(filterFlightTime);
             }
             vm.filteredResults = filtered;
         }
