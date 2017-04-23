@@ -19,7 +19,8 @@
         return service;
 
         function registerPilot(registration) {
-            return $http.post(urlBase + "accounts/pilot-registration", registration);
+            // return $http.post(urlBase + "accounts/pilot-registration", registration);
+			return $http.post('/api/users', {user: registration});
         }
 
         function registerPrepaidPilot(registration) {

@@ -53,10 +53,9 @@
         }
 
         function submit(isValid) {
-            if (!isValid || !vm.registration.nonce) { return; }
+            // if (!isValid || !vm.registration.nonce) { return; }
 
             vm.isSubmitting = true;
-
             registrationService.registerPilot(vm.registration).then(function(resp){
                 $state.go("root.register-pilot.confirmation", { user: resp.data });
             },
