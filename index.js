@@ -43,64 +43,59 @@ API.route = function(name){
 	API.use(name, router)
 	return router
 }
-API.RESTful = function(name){
-	const router = API.route(name)
-	router
-		.get(   '/', echo)
-		.get(   '/:id', echo)
-		.post(  '/', echo)
-		.put(   '/:id', echo)
-		.delete('/:id', echo)
-	return router
-}
 
 httpServer.use('/api', API)
 API
 	.route('/sessions')
-		.get(	'/', echo)
-		.post(	'/', echo)
-		.delete('/', echo)
+		.post(	'/', (req, res) => {
+			User.findOne({where: {email: (req.body.user || {}).email}}).then((user) => {
+				if(user && req.body.password == user.password){
+					req.session.user = { email: user.email, id: user.id }
+					res.json({ success: true, user })
+				}else{
+					req.session.destroy()
+					res.json({ success: false })
+				}
+			})
+		})
+		.delete('/', (req, res) => {
+			req.session.destroy()
+			res.json({ success: true })
+		})
 API
 	.route('/users')
 		.get(	'/', (req, res) => {
 			User.findAll().then((users) => {
-				res.json(users)
+				res.json({success: true, users})
 			})
 		})
 		.get(	'/:id', (req, res) => {
 			User.findById(req.params.id).then((user) => {
-				res.json(user)
+				if(user){
+					res.json({success: true, user})
+				}else{
+					res.json({success: false})
+				}
 			})
 		})
 		.post(	'/', (req, res) => {
 			User.create(req.body.user).then((user) => {
-				res.json(user)
+				res.json({success: true, user})
+			}).catch((error) => {
+				res.json({success: false, error: error.message})
 			})
 		})
 		.put(	'/:id', (req, res) => {
 			User.findById(req.params.id).then((existingUser) => {
 				existingUser.update(req.body.user).then((newUser) => {
-					res.json(newUser)
+					res.json({success: true, user: newUser})
+				}).catch((error) => {
+					res.json({success: false, error: error.message})
 				})
 			})
 		})
 		.delete('/:id', (req, res) => {
 			User.destroy({where: {id: req.params.id}}).then((user) => {
-				res.json({
-					success: true
-				})
+				res.json({ success: true })
 			})
 		})
-API
-	.RESTful('/orgs')
-API
-	.RESTful('/drones')
-API
-	.RESTful('/missions')
-
-function echo(req, res){
-	res.json({
-		success: true,
-		headers: req.headers
-	})
-}

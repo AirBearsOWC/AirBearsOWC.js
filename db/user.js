@@ -13,8 +13,8 @@ module.exports = db.define('user', {
 	},
 	firstName: 					{ type: $.STRING },
 	lastName: 					{ type: $.STRING },
-	email: 						{ type: $.STRING },
-	password: 					{ type: $.STRING },
+	email: 						{ type: $.STRING, allowNull: false, unique: true },
+	password: 					{ type: $.STRING, allowNull: false},
 	country: 					{ type: $.STRING },
 	isActive: 					{ type: $.BOOLEAN },
 	phone: 						{ type: $.STRING },
@@ -32,7 +32,7 @@ module.exports = db.define('user', {
 	teeShirtSize:				{ type: $.STRING },
 	teeShirtMailedDate:			{ type: $.STRING },
 	allowsPilotSearch:			{ type: $.BOOLEAN },
-	role:						{ type: $.STRING },
+	role:						{ type: $.STRING, allowNull: false, defaultValue: 'pilot'},
 	subscribesToUpdates:		{ type: $.BOOLEAN },
 	hasInternationalAddress:	{ type: $.BOOLEAN }
 })
