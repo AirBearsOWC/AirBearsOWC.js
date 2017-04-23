@@ -8,7 +8,7 @@
             bindings: {
 
             },
-            controller: function ($scope, $state, registrationService, authService, userService, postService) {
+            controller: function ($scope, $state, registrationService, authService, userService) {
                 var vm = this;
 
                 vm.user = null;
@@ -30,10 +30,6 @@
 
                     authService.onUnauthenticated($scope, function () {
                         vm.user = null;
-                    });
-
-                    postService.getPosts(3).then(function (posts) {
-                        vm.latestPosts = posts;
                     });
                 }
 

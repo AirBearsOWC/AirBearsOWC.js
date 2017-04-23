@@ -18,9 +18,13 @@
         return service;
 
         function getCurrentUser() {
-            return $http.get("/api/me").then(function (resp) {
+            return $http.get("/api/sessions").then(function (resp) {
                 var user = resp.data;
-
+                
+                if (!user.hasOwnProperty('roles')) {
+                    return $q.reject(resp);
+                }
+                
                 if (user.roles.indexOf("Admin") >= 0)
                 {
                     user.isAdmin = true;
@@ -29,7 +33,7 @@
                 if (user.roles.indexOf("Authority") >= 0) {
                     user.isAuthority = true;
                 }
-
+                    
                 return user;
             }, function (resp) {
                 return $q.reject(resp);
@@ -45,7 +49,7 @@
         }
 
         function changePassword(passwordData) {
-            return $http.post("/api/me/password", passwordData);
+            return $http.post("/api/sessions", passwordData);
         }
     }
 })();
