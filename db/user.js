@@ -34,5 +34,8 @@ module.exports = db.define('user', {
 	allowsPilotSearch:			{ type: $.BOOLEAN },
 	role:						{ type: $.STRING, allowNull: false, defaultValue: 'pilot'},
 	subscribesToUpdates:		{ type: $.BOOLEAN },
+	faaPart107Certified:		{ type: $.BOOLEAN },
+	hamRadioLicensed:			{ type: $.BOOLEAN },
+	femaIcsCertified:			{ type: $.BOOLEAN },
 	hasInternationalAddress:	{ type: $.BOOLEAN }
 })
