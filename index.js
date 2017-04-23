@@ -156,6 +156,7 @@ API
 	.route('/pilots')
 		.get('/', (req, res) => {
 			// Same as get all users, except shows only pilots
+			console.log(req.cookies)
 			let query = req.query
 			query.role = "pilot"
 			User.findAll({where: query}).then((users) => {
@@ -201,10 +202,15 @@ API
 				}
 			})
 		})
+API
+	.route('/resources')
+		.get('/states', (req, res) => {
+			res.json(require('./resources/states'))
+		})
 
 	// Fix for express to work with HTML5Mode in angular ui-router
 	// @see https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions#how-to-configure-your-server-to-work-with-html5mode
-	httpServer.all('/*', function(req, res, next) {
+	httpServer.get('/*', function(req, res, next) {
 	    // Just send the index.html for other files to support HTML5Mode
 	    res.sendFile('./public/index.html', { root: __dirname });
 	})

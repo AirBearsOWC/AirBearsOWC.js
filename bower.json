@@ -1,5 +1,5 @@
 {
-  "name": "AirBears",
+  "name": "airbears",
   "private": true,
   "dependencies": {
     "angular": "1.5.8",
