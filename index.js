@@ -104,7 +104,7 @@ API
 		})
 		.delete('/:id', (req, res) => {
 			User.destroy({where: {id: req.params.id}}).then((user) => {
-				res.json({ success: true })
+				res.json({ success: !!user })
 			})
 		})
 API
@@ -136,6 +136,11 @@ API
 				res.json({success: true, drone})
 			}).catch((error) => {
 				res.json({success: false, error: error.message})
+			})
+		})
+		.delete('/:id', (req, res) => {
+			Drone.destroy({where: {id: req.params.id}}).then((drone) => {
+				res.json({success: !!drone})
 			})
 		})
 
