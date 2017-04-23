@@ -16,7 +16,8 @@
                 template: "<shell></shell>",
                 abstract: true,
                 resolve: {
-                    authService: "authService"
+                    authService: "authService",
+                    registrationService: "registrationService"
                 }
             })
             .state("root.home", {
@@ -36,8 +37,8 @@
                 url: "/register",
                 templateUrl: "app/pilot-search/pilot-search.html",
                 controller: "PilotSearchController as vm",
-                onEnter: ['authService', function(authService) {
-                    authService.openLogin();
+                onEnter: ['registrationService', function(registrationService) {
+                    registrationService.openRegistrationOptions();
                 }]
             })
             .state("root.register-pilot", {

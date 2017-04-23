@@ -103,7 +103,7 @@
         vm.selectPilot = selectPilot;
         vm.search = search;
         vm.pageChanged = pageChanged;
-        vm.openRegistationOptions = registrationService.openRegistationOptions;
+        vm.openRegistrationOptions = registrationService.openRegistrationOptions;
         vm.openLogin = authService.openLogin;
         vm.filterSearchResults = filterSearchResults;
 
