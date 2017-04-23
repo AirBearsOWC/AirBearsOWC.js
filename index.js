@@ -54,9 +54,7 @@ API
 API
 	.route('/users')
 		.get(	'/', (req, res) => {
-			User.findAll().then((users) => {
-				res.json(users)
-			})
+			res.json(require('./db/sample/existing_users'))
 		})
 		.get(	'/:id', echo)
 		.post(	'/', echo)
