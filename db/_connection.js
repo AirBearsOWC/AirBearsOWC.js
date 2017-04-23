@@ -8,3 +8,4 @@ db.Sequelize = Sequelize
 module.exports = db
 
 require('./user')
+require('./drone')
