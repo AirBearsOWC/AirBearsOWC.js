@@ -58,10 +58,30 @@ API
 				res.json(users)
 			})
 		})
-		.get(	'/:id', echo)
-		.post(	'/', echo)
-		.put(	'/:id', echo)
-		.delete('/:id', echo)
+		.get(	'/:id', (req, res) => {
+			User.findById(req.params.id).then((user) => {
+				res.json(user)
+			})
+		})
+		.post(	'/', (req, res) => {
+			User.create(req.body.user).then((user) => {
+				res.json(user)
+			})
+		})
+		.put(	'/:id', (req, res) => {
+			User.findById(req.params.id).then((existingUser) => {
+				existingUser.update(req.body.user).then((newUser) => {
+					res.json(newUser)
+				})
+			})
+		})
+		.delete('/:id', (req, res) => {
+			User.destroy({where: {id: req.params.id}}).then((user) => {
+				res.json({
+					success: true
+				})
+			})
+		})
 API
 	.RESTful('/orgs')
 API
