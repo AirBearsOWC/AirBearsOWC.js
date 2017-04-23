@@ -110,7 +110,7 @@
                 });
 
                 vm.results = data;
-                vm.filteredResults = data;
+                filterSearchResults();
                 vm.isSearching = false;
                 vm.currentPage = 1;
             }, 
