@@ -14,8 +14,6 @@ const baseServer = http.createServer(httpServer)
 const db = require('./db/_connection')
 const User = db.models.user
 
-const pilot_search_data = require('./mock_data/pilot_search.json');
-
 baseServer
 	.listen('3000', () => {
 		console.log(Date().toLocaleString())
@@ -75,11 +73,6 @@ API
 				res.json({success: true, users})
 			})
 		})
-		.get(	'/pilots', (req, res) => {
-			User.findAll({where: {role: "pilot"}}).then((users) => {
-				res.json({success: true, users})
-			})
-		})
 		.get(	'/:id', (req, res) => {
 			User.findById(req.params.id).then((user) => {
 				if(user){
@@ -113,6 +106,13 @@ API
 				res.json({ success: true })
 			})
 		})
+API
+	.route('/pilots')
+		.get('/', (req, res) => {
+			User.findAll({where: {role: "pilot"}}).then((users) => {
+				res.json({success: true, users})
+			})
+		})
 
 API
 	.route('/token')
@@ -124,11 +124,6 @@ API
 			res.json({
 				roles: ['Admin', 'Authority']
 			})
-		})
-API
-	.route('/pilots')
-		.post('/search', (req, res) => {
-			res.json(pilot_search_data)
 		})
 
 function echo(req, res){
