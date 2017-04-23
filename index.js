@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const http = require('http')
 const session = require('express-session')
 const sessionFileStore = require('session-file-store')
+const bcrypt = require('bcrypt')
 
 const httpServer = express()
 const baseServer = http.createServer(httpServer)
@@ -45,14 +46,23 @@ API
 	.route('/sessions')
 		.post(	'/', (req, res) => {
 			User.findOne({where: {email: (req.body.user || {}).email}}).then((user) => {
-				if(user && req.body.password == user.password){
-					req.session.user = { email: user.email, id: user.id }
-					res.json({ success: true, user })
+				if(user){
+					bcrypt.compare(req.body.user.password, user.password).then((success) => {
+						if(success){
+							req.session.user = { email: user.email, id: user.id }
+							res.json({ success: true })
+						}else{
+							failure()
+						}
+					})
 				}else{
-					req.session.destroy()
-					res.json({ success: false })
+					failure()
 				}
 			})
+			function failure(){
+				req.session.destroy()
+				res.json({ success: false })
+			}
 		})
 		.delete('/', (req, res) => {
 			req.session.destroy()
@@ -80,10 +90,13 @@ API
 			})
 		})
 		.post(	'/', (req, res) => {
-			User.create(req.body.user).then((user) => {
-				res.json({success: true, user})
-			}).catch((error) => {
-				res.json({success: false, error: error.message})
+			bcrypt.hash(req.body.user.password, 10).then((hash) => {
+				req.body.user.password = hash
+				User.create(req.body.user).then((user) => {
+					res.json({success: true, user})
+				}).catch((error) => {
+					res.json({success: false, error: error.message})
+				})
 			})
 		})
 		.put(	'/:id', (req, res) => {
