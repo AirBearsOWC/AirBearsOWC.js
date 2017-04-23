@@ -145,22 +145,3 @@ API
 				res.json({success: !!drone})
 			})
 		})
-
-API
-	.route('/token')
-		.post('/', echo)
-		.get('/',echo)
-API
-	.route('/me')
-		.get('/', (req, res) => {
-			res.json({
-				roles: ['Admin', 'Authority']
-			})
-		})
-
-function echo(req, res){
-	res.json({
-		success: true,
-		headers: req.headers
-	})
-}
