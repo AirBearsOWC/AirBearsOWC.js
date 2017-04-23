@@ -11,6 +11,8 @@ const baseServer = http.createServer(httpServer)
 const db = require('./db/_connection')
 const User = db.models.user
 
+const pilot_search_data = require('./mock_data/pilot_search.json');
+
 baseServer
 	.listen('3000', () => {
 		console.log(Date().toLocaleString())
@@ -60,6 +62,11 @@ API
 		.post(	'/', echo)
 		.put(	'/:id', echo)
 		.delete('/:id', echo)
+
+API.route('/token').post('/', echo).get('/',echo)
+API.route('/me').get('/', mockAuth)
+API.route('/pilots').post('/search', mockPilotSearchService)
+
 API
 	.RESTful('/orgs')
 API
@@ -67,9 +74,21 @@ API
 API
 	.RESTful('/missions')
 
+
 function echo(req, res){
 	res.json({
 		success: true,
 		headers: req.headers
 	})
+}
+
+
+function mockAuth(req, res) {
+	res.json({
+        roles: ['Admin', 'Authority']
+	})
+}
+
+function mockPilotSearchService(req, res) {
+	res.json(pilot_search_data)
 }
