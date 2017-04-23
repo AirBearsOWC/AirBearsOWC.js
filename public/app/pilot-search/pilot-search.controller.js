@@ -12,6 +12,7 @@
 
         vm.user = null;
         vm.results = null;
+        vm.filteredResults = null;
         vm.currentPage = 1;
         vm.pageSize = 8;
         vm.distances = [
@@ -26,6 +27,7 @@
             { value: 1000, name: "1000 miles" }
         ];
         vm.isSearching = false;
+        vm.filterICS = false;
 
         vm.toggleMarkerWindow = toggleMarkerWindow;
         vm.selectPilot = selectPilot;
@@ -33,6 +35,7 @@
         vm.pageChanged = pageChanged;
         vm.openRegistationOptions = registrationService.openRegistationOptions;
         vm.openLogin = authService.openLogin;
+        vm.filterSearchResults = filterSearchResults;
 
         activate();
 
@@ -106,6 +109,7 @@
                 });
 
                 vm.results = data;
+                vm.filteredResults = data;
                 vm.isSearching = false;
                 vm.currentPage = 1;
             }, 
@@ -115,6 +119,22 @@
                     toast.pop("error", "Search Error", "", resp.data);
                 }
             });
+        }
+
+        function filterSearchResults() {
+            function filterLogic(result) {
+                if(vm.filterICS) {
+                    return result.femaIcsCertified === true;
+                } else {
+                    return typeof result !== 'undefined';
+                }
+            }
+
+            if(!vm.results || !vm.results.length) {
+                console.log('Nothing to filter!');
+                return;
+            }
+            vm.filteredResults = vm.results.filter(filterLogic);
         }
 
         function pageChanged() {

@@ -26,6 +26,16 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>
+                                        <input class="form-control" type="checkbox" ng-model="vm.filterICS" ng-click="vm.filterSearchResults()"/>
+                                        FEMA ICS Certified Only</label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-success" ng-disabled="vm.isSearching || !vm.user" style="width: 100%;">
                                 <i class="glyphicon glyphicon-search"></i> Search
@@ -38,18 +48,23 @@
 
             <div class="panel panel-default" ng-show="vm.results">
                 <div class="panel-heading">
-                    <h2 class="panel-title">{{ vm.results.length }} Pilots Found</h2>
+                    <h2 class="panel-title">{{ vm.filteredResults.length }} Pilots Found</h2>
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item" 
-                        ng-repeat="pilot in vm.results | startFrom:(vm.currentPage-1)*vm.pageSize | limitTo:vm.pageSize" 
+                        ng-repeat="pilot in vm.filteredResults | startFrom:(vm.currentPage-1)*vm.pageSize | limitTo:vm.pageSize"
                         ng-click="vm.selectPilot(pilot)" 
                         ng-class="{ active: pilot.show }">
 
-                        <strong>{{ pilot.firstName }} {{ pilot.lastName }}</strong>
+                        <strong>Name:</strong>&nbsp;{{ pilot.firstName }} {{ pilot.lastName }}
                         <span class="badge">{{ pilot.distance | number:2 }} miles</span>
                         <br />
-                        <em>{{ pilot.email }}</em>
+                        <strong>Email:</strong>&nbsp;<a href="mailto:{{ pilot.email }}">{{ pilot.email }}</a>
+                        <br/>
+                        <strong>Flight Time:</strong>&nbsp;{{pilot.flightTime.name || 'Not provided'}}<br/>
+                        <strong>Payload:</strong>&nbsp;{{pilot.payload.name || 'Not provided'}}<br/>
+                        <span class="badge" ng-show="pilot.femaIcsCertified">FEMA ICS Certified</span>
+                        <span class="badge" ng-show="pilot.faaPart107Certified">FAA Part 107 Certified</span>
                     </li>
                     <li class="list-group-item" ng-show="vm.results.totalCount === 0">
                         No pilots were found. Try expanding your search distance.
@@ -57,7 +72,7 @@
                 </ul>
             </div>
 
-            <uib-pagination total-items="vm.results.length"                            
+            <uib-pagination total-items="vm.filteredResults.length"
                             items-per-page="vm.pageSize"
                             max-size="6"
                             boundary-link-numbers="true"
@@ -69,9 +84,9 @@
         </div>
 
         <div class="col-sm-7">
-            <ui-gmap-google-map ng-if="vm.map && vm.results && vm.user" center="vm.map.center" zoom="vm.map.zoom">
+            <ui-gmap-google-map ng-if="vm.map && vm.filteredResults && vm.user" center="vm.map.center" zoom="vm.map.zoom">
                 <ui-gmap-circle center="vm.circle.center" stroke="vm.circle.stroke" fill="vm.circle.fill" radius="vm.circle.radius"></ui-gmap-circle>
-                <ui-gmap-markers models="vm.results" coords="'self'" options="'options'" click="vm.toggleMarkerWindow">
+                <ui-gmap-markers models="vm.filteredResults" coords="'self'" options="'options'" click="vm.toggleMarkerWindow">
                     <ui-gmap-windows show="show" templateUrl="'windowTemplate'" templateParameter="model"></ui-gmap-windows>
                 </ui-gmap-markers>
             </ui-gmap-google-map>
