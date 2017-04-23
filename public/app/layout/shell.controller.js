@@ -13,7 +13,7 @@
 
                 vm.user = null;
                 vm.isActive = isActive;
-                vm.openRegistationOptions = registrationService.openRegistationOptions;
+                vm.openRegistrationOptions = registrationService.openRegistrationOptions;
                 vm.openLogin = authService.openLogin;
                 vm.logout = logout;
 
