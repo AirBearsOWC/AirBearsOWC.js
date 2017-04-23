@@ -4,6 +4,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const http = require('http')
+const session = require('express-session')
+const sessionFileStore = require('session-file-store')
 
 const httpServer = express()
 const baseServer = http.createServer(httpServer)
@@ -23,9 +25,16 @@ httpServer
 	.use('/', express.static('./public'))
 	.use(bodyParser.json())
 	.use(cookieParser())
+	.use(session({
+		store: new (sessionFileStore(session)),
+		secret: 'ayy',
+		resave: false,
+		saveUninitialized: false
+	}))
 
 httpServer
 	.get('/', (req, res) => {
+		console.log(req.session)
 		res.sendFile(__dirname + '/public/src.html')
 	})
 
@@ -36,59 +45,83 @@ API.route = function(name){
 	API.use(name, router)
 	return router
 }
-API.RESTful = function(name){
-	const router = API.route(name)
-	router
-		.get(   '/', echo)
-		.get(   '/:id', echo)
-		.post(  '/', echo)
-		.put(   '/:id', echo)
-		.delete('/:id', echo)
-	return router
-}
 
 httpServer.use('/api', API)
 API
 	.route('/sessions')
-		.get(	'/', echo)
-		.post(	'/', echo)
-		.delete('/', echo)
+		.post(	'/', (req, res) => {
+			User.findOne({where: {email: (req.body.user || {}).email}}).then((user) => {
+				if(user && req.body.password == user.password){
+					req.session.user = { email: user.email, id: user.id }
+					res.json({ success: true, user })
+				}else{
+					req.session.destroy()
+					res.json({ success: false })
+				}
+			})
+		})
+		.delete('/', (req, res) => {
+			req.session.destroy()
+			res.json({ success: true })
+		})
 API
 	.route('/users')
 		.get(	'/', (req, res) => {
-			res.json(require('./db/sample/existing_users'))
+			User.findAll().then((users) => {
+				res.json({success: true, users})
+			})
 		})
-		.get(	'/:id', echo)
-		.post(	'/', echo)
-		.put(	'/:id', echo)
-		.delete('/:id', echo)
-
-API.route('/token').post('/', echo).get('/',echo)
-API.route('/me').get('/', mockAuth)
-API.route('/pilots').post('/search', mockPilotSearchService)
+		.get(	'/:id', (req, res) => {
+			User.findById(req.params.id).then((user) => {
+				if(user){
+					res.json({success: true, user})
+				}else{
+					res.json({success: false})
+				}
+			})
+		})
+		.post(	'/', (req, res) => {
+			User.create(req.body.user).then((user) => {
+				res.json({success: true, user})
+			}).catch((error) => {
+				res.json({success: false, error: error.message})
+			})
+		})
+		.put(	'/:id', (req, res) => {
+			User.findById(req.params.id).then((existingUser) => {
+				existingUser.update(req.body.user).then((newUser) => {
+					res.json({success: true, user: newUser})
+				}).catch((error) => {
+					res.json({success: false, error: error.message})
+				})
+			})
+		})
+		.delete('/:id', (req, res) => {
+			User.destroy({where: {id: req.params.id}}).then((user) => {
+				res.json({ success: true })
+			})
+		})
 
 API
-	.RESTful('/orgs')
+	.route('/token')
+		.post('/', echo)
+		.get('/',echo)
 API
-	.RESTful('/drones')
+	.route('/me')
+		.get('/', (req, res) => {
+			res.json({
+				roles: ['Admin', 'Authority']
+			})
+		})
 API
-	.RESTful('/missions')
-
+	.route('/pilots')
+		.post('/search', (req, res) => {
+			res.json(pilot_search_data)
+		})
 
 function echo(req, res){
 	res.json({
 		success: true,
 		headers: req.headers
 	})
-}
-
-
-function mockAuth(req, res) {
-	res.json({
-        roles: ['Admin', 'Authority']
-	})
-}
-
-function mockPilotSearchService(req, res) {
-	res.json(pilot_search_data)
 }
