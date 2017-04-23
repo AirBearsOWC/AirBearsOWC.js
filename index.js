@@ -17,6 +17,31 @@ const Drone = db.models.drone
 
 const ENV = require('./env.json')
 
+const checkIf = {
+	isLoggedIn: function(req, res, next){
+		if(req.session && req.session.user && req.session.user.id){
+			next()
+		}else{
+			req.session.destroy()
+			res.json({success: false, error: 'You must be logged in to do that'})
+		}
+	},
+	isAdmin: function(req, res, next){
+		if(req.session && req.session.user && (req.session.user.role == "admin")){
+			next()
+		}else{
+			res.json({success: false, error: 'You don\'t have access to do that'})
+		}
+	},
+	isCurrentUser: function(req, res, next){
+		if(req.session && req.session.user && (req.params.id == req.session.user.id)){
+			next()
+		}else{
+			res.json({success: false, error: 'That isn\'t you'})
+		}
+	}
+}
+
 baseServer
 	.listen('3000', () => {
 		console.log(Date().toLocaleString())
@@ -45,12 +70,19 @@ API.route = function(name){
 httpServer.use('/api', API)
 API
 	.route('/sessions')
+		.get(	'/', checkIf.isLoggedIn, (req, res) => {
+			res.json({success: true, user: req.session.user})
+		})
 		.post(	'/', (req, res) => {
 			User.findOne({where: {email: (req.body.user || {}).email}}).then((user) => {
 				if(user){
 					bcrypt.compare(req.body.user.password, user.password).then((success) => {
 						if(success){
-							req.session.user = { email: user.email, id: user.id }
+							req.session.user = {
+								email: user.email,
+								id: user.id,
+								role: user.role
+							}
 							res.json({ success: true })
 						}else{
 							failure()
@@ -65,13 +97,13 @@ API
 				res.json({ success: false })
 			}
 		})
-		.delete('/', (req, res) => {
+		.delete('/', checkIf.isLoggedIn, (req, res) => {
 			req.session.destroy()
 			res.json({ success: true })
 		})
 API
 	.route('/users')
-		.get(	'/', (req, res) => {
+		.get(	'/', checkIf.isAdmin, (req, res) => {
 			User.findAll({where: req.query}).then((users) => {
 				res.json({success: true, users})
 			})
@@ -95,7 +127,7 @@ API
 				})
 			})
 		})
-		.put(	'/:id', (req, res) => {
+		.put(	'/:id', checkIf.isLoggedIn, (req, res) => {
 			User.findById(req.params.id).then((existingUser) => {
 				existingUser.update(req.body.user).then((newUser) => {
 					res.json({success: true, user: newUser})
@@ -104,7 +136,7 @@ API
 				})
 			})
 		})
-		.delete('/:id', (req, res) => {
+		.delete('/:id', checkIf.isCurrentUser, (req, res) => {
 			User.destroy({where: {id: req.params.id}}).then((user) => {
 				res.json({ success: !!user })
 			})
@@ -133,7 +165,7 @@ API
 				res.json({success: true, drones})
 			})
 		})
-		.post('/user/:id', (req, res) => {
+		.post('/user/:id', checkIf.isCurrentUser, (req, res) => {
 			User.findById(req.params.id).then((user) => {
 				return user.createDrone(req.body.drone)
 			}).then((drone) => {
@@ -143,7 +175,13 @@ API
 			})
 		})
 		.delete('/:id', (req, res) => {
-			Drone.destroy({where: {id: req.params.id}}).then((drone) => {
-				res.json({success: !!drone})
+			Drone.findById(req.params.id).then((drone) => {
+				if(drone && drone.userId == req.session.user.id){
+					drone.destroy().then((success) => {
+						res.json({success: !!success})
+					})
+				}else{
+					res.json({success: false})
+				}
 			})
 		})
